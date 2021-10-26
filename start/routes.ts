@@ -18,4 +18,7 @@ Route.group(() => {
 
   Route.get('/login', 'AuthController.create')
   Route.post('/login', 'AuthController.store')
+
+  Route.get('/forgot-password', 'PasswordResetRequestController.create')
+  Route.post('/forgot-password', 'PasswordResetRequestController.store')
 }).namespace('App/Controllers/Http/Auth')

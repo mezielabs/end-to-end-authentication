@@ -29,5 +29,9 @@ declare module '@ioc:Adonis/Core/Event' {
   */
   interface EventsList {
     userRegistered: User
+    passwordResetRequested: {
+      user: User
+      token: string
+    }
   }
 }
