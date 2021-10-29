@@ -9,7 +9,7 @@ export default class AuthController {
   }
 
   public async store({ request, session, response, auth }: HttpContextContract) {
-    const { email, password, remember } = await request.validate(LoginValidator)
+    const { email, password, remember, intended } = await request.validate(LoginValidator)
 
     // try {
     //   await auth.attempt(email, password, remember)
@@ -53,7 +53,17 @@ export default class AuthController {
       if (passwordVerified) {
         await auth.login(user, remember)
 
-        return response.redirect('/')
+        // const intendedUrl = session.get('intended_url', false)
+
+        // if (intendedUrl) {
+        //   const redirectToIntendedUrl = response.redirect(intendedUrl)
+
+        //   session.forget('intended_url')
+
+        //   return redirectToIntendedUrl
+        // }
+
+        return intended ? response.redirect(intended) : response.redirect('/')
       }
     }
 
@@ -65,5 +75,11 @@ export default class AuthController {
     })
 
     return response.redirect().back()
+  }
+
+  public async destroy({ auth, response }: HttpContextContract) {
+    await auth.logout()
+
+    return response.redirect('/')
   }
 }

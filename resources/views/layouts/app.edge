@@ -32,6 +32,12 @@
       <div class="flex space-x-6">
         @if(auth.isLoggedIn)
           <div>{{ auth.user.name }}</div>
+
+          <form action="/logout" method="post">
+            {{ csrfField() }}
+
+            <button>Logout</button>
+          </form>
         @else
           <a href="/register">Register</a>
           <a href="/login">Login</a>

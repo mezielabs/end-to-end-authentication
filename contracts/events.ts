@@ -33,5 +33,6 @@ declare module '@ioc:Adonis/Core/Event' {
       user: User
       token: string
     }
+    passwordReset: User
   }
 }
