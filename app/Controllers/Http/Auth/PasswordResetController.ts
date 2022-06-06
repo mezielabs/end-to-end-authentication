@@ -35,6 +35,7 @@ export default class PasswordResetController {
         .where('token', payload.token)
         .preload('user')
         .firstOrFail()
+
       const user = token.user
 
       user.password = payload.password
