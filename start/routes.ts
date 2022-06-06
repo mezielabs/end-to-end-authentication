@@ -28,7 +28,6 @@ Route.group(() => {
     Route.get('/reset-password/:token', 'PasswordResetController.create')
     Route.post('/reset-password', 'PasswordResetController.store')
   }).middleware('guest')
-})
 
   Route.post('/logout', 'AuthController.destroy').middleware('auth')
 }).namespace('App/Controllers/Http/Auth')
