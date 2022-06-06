@@ -8,7 +8,7 @@ export default class LoginValidator {
     email: schema.string(),
     password: schema.string(),
     remember: schema.boolean.optional(),
-    next: schema.string.optional(),
+    intended: schema.string.optional(),
   })
 
   public messages = {}

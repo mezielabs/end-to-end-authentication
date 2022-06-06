@@ -6,28 +6,29 @@ Route.get('/', async ({ view }) => {
 
 Route.get('/dashboard', async ({ view }) => {
   return view.render('dashboard')
-})
-  .as('dashboard')
-  .middleware('auth')
+}).middleware('auth')
 
 Route.group(() => {
-  Route.get('/register', 'RegisterController.create').middleware('guest')
-  Route.post('/register', 'RegisterController.store').middleware('guest')
+  Route.group(() => {
+    Route.get('/register', 'RegisterController.create')
+    Route.post('/register', 'RegisterController.store')
 
-  Route.get('/verification/new', 'EmailVerificationController.create').middleware('guest')
-  Route.post('/verification', 'EmailVerificationController.store').middleware('guest')
-  Route.get('/verification/:email', 'EmailVerificationController.verify')
-    .as('verification.verify')
-    .middleware('guest')
+    Route.get('/verification/new', 'EmailVerificationController.create')
+    Route.post('/verification', 'EmailVerificationController.store')
+    Route.get('/verification/:email', 'EmailVerificationController.verify').as(
+      'verification.verify'
+    )
 
-  Route.get('/login', 'AuthController.create').middleware('guest')
-  Route.post('/login', 'AuthController.store').middleware('guest')
+    Route.get('/login', 'AuthController.create')
+    Route.post('/login', 'AuthController.store')
 
-  Route.get('/forgot-password', 'PasswordResetRequestController.create').middleware('guest')
-  Route.post('/forgot-password', 'PasswordResetRequestController.store').middleware('guest')
+    Route.get('/forgot-password', 'PasswordResetRequestController.create')
+    Route.post('/forgot-password', 'PasswordResetRequestController.store')
 
-  Route.get('/reset-password/:token', 'PasswordResetController.create').middleware('guest')
-  Route.post('/reset-password', 'PasswordResetController.store').middleware('guest')
+    Route.get('/reset-password/:token', 'PasswordResetController.create')
+    Route.post('/reset-password', 'PasswordResetController.store')
+  }).middleware('guest')
+})
 
   Route.post('/logout', 'AuthController.destroy').middleware('auth')
 }).namespace('App/Controllers/Http/Auth')

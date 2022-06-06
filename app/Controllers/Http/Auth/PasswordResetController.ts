@@ -11,7 +11,7 @@ export default class PasswordResetController {
         .preload('user')
         .firstOrFail()
 
-      return await view.render('auth/reset-password', {
+      return view.render('auth/reset-password', {
         token: token.token,
         email: token.user.email,
       })
@@ -19,11 +19,11 @@ export default class PasswordResetController {
       session.flash({
         alert: {
           type: 'error',
-          message: 'Password reset link is invalid or has expired.',
+          message: 'Invalid password reset token.',
         },
       })
 
-      return response.redirect('/password/reset')
+      return response.redirect('/forgot-password')
     }
   }
 

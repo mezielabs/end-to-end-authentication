@@ -1,10 +1,10 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import PasswordResetToken from 'App/Models/PasswordResetToken'
 import User from 'App/Models/User'
-import PasswordResetRequestValidator from 'App/Validators/EmailValidator'
-import Event from '@ioc:Adonis/Core/Event'
-import Encryption from '@ioc:Adonis/Core/Encryption'
+import EmailValidator from 'App/Validators/EmailValidator'
 import { string } from '@ioc:Adonis/Core/Helpers'
+import Encryption from '@ioc:Adonis/Core/Encryption'
+import Event from '@ioc:Adonis/Core/Event'
 
 export default class PasswordResetRequestController {
   public create({ view }: HttpContextContract) {
@@ -12,7 +12,7 @@ export default class PasswordResetRequestController {
   }
 
   public async store({ request, session, response }: HttpContextContract) {
-    const { email } = await request.validate(PasswordResetRequestValidator)
+    const { email } = await request.validate(EmailValidator)
 
     const user = await User.findByOrFail('email', email)
 
