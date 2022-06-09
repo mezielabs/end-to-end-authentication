@@ -46,7 +46,7 @@ export default class AuthMiddleware {
       }
     }
 
-    // ctx.session.put('intended_url', ctx.request.url())
+    ctx.session.put('intended_url', ctx.request.url())
 
     /**
      * Unable to authenticate using any guard
@@ -55,7 +55,7 @@ export default class AuthMiddleware {
       'Unauthorized access',
       'E_UNAUTHORIZED_ACCESS',
       guardLastAttempted,
-      `${this.redirectTo}?intended=${encodeURIComponent(ctx.request.url())}`
+      this.redirectTo
     )
   }
 

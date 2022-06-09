@@ -8,7 +8,21 @@ export default class AppProvider {
   }
 
   public async boot() {
-    // IoC container is ready
+    const Response = this.app.container.use('Adonis/Core/Response')
+
+    // Response.getter('intended', function () {
+    // const intendedUrl = this.ctx!.session.pull('intended_url', '/')
+
+    // this.ctx!.response.redirect(intendedUrl)
+    // })
+
+    Response.macro('intended', function (defaultUri = '/') {
+      const intendedUrl = this.ctx!.session.pull('intended_url', defaultUri)
+
+      this.ctx!.response.redirect(intendedUrl)
+
+      return this
+    })
   }
 
   public async ready() {
