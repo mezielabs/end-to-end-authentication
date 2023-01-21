@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>End to End Authentication</title>
+  <title>End to End Authentication - {{ env('APP_NAME') }}</title>
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body class="bg-gray-100 font-sans">
+<body class="bg-gray-100 text-gray-400 font-sans">
   @if(auth.isLoggedIn && !auth.user.emailVerifiedAt)
     <div class="bg-indigo-600">
       <div class="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
@@ -22,31 +23,87 @@
     </div>
   @endif
 
-  <nav class="bg-white py-6">
-    <div class="container mx-auto flex justify-between items-center px-6">
-      <div class="space-x-6">
-        <a href="/">Home</a>
-        <a href="/dashboard">Dashboard</a>
+  <nav class="bg-white shadow-sm" x-data="{ open: false }">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <a href="{{ route('home') }}" class="font-semibold text-gray-700">AdonisJS</a>
+          </div>
+          <div class="hidden sm:block sm:ml-6">
+            <div class="flex space-x-4">
+              <a href="{{ route('dashboard') }}" class="text-gray-500 hover:text-gray-900 text-sm font-medium">Dashboard</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="hidden sm:ml-6 sm:block">
+          <div class="flex items-center space-x-4">
+            @if(auth.isLoggedIn)
+              <div class="ml-3 relative" x-data="{ open: false }" @click.away="open = false">
+                <div>
+                  <button type="button" class="flex text-sm rounded-full" id="user-menu-button" @click="open = !open">
+                    {{ auth.user.name }}
+                  </button>
+                </div>
+
+                <div
+                  class="origin-top-right absolute right-0 mt-2 w-56 bg-white border border-gray-100 rounded-md shadow-md divide-y divide-gray-100 focus:outline-none"
+                  tabindex="-1" x-show="open">
+                  <form action="{{ route('AuthController.destroy') }}" method="post">
+                    {{ csrfField() }}
+                    <button
+                      class="w-full text-left px-6 py-2.5 text-sm text-gray-500 hover:bg-brand-100 hover:text-brand-500">
+                      Log out
+                    </button>
+                  </form>
+                </div>
+              </div>
+            @else
+              <a href="/login" class="text-gray-500 font-medium text-sm hover:text-brand-500">
+                Log in
+              </a>
+              <a href="/register"
+                class="text-gray-500 font-medium text-sm hover:text-brand-500">
+                Register
+              </a>
+            @endif
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-1 sm:hidden">
+          <button type="button" class="inline-flex items-center justify-center text-gray-500 focus:outline-none"
+            @click="open = !open">
+            <svg class="h-6 w-6" :class="{ 'hidden': open, 'block': !open }"
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" />
+            </svg>
+
+            <svg class="h-6 w-6" :class="{ 'block': open, 'hidden': !open }"
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path
+                d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
+            </svg>
+          </button>
+        </div>
       </div>
+    </div>
 
-      <div class="flex space-x-6">
-        @if(auth.isLoggedIn)
-          <div>{{ auth.user.name }}</div>
+    <div class="sm:hidden" x-show="open" style="display: none">
+      <div class="px-4 py-2.5 space-y-1">
+        <a href="{{ route('dashboard') }}" class="block text-gray-500 hover:text-brand-500">Dashboard</a>
 
-          <form action="/logout" method="post">
-            {{ csrfField() }}
-
-            <button>Logout</button>
-          </form>
-        @else
-          <a href="/register">Register</a>
-          <a href="/login">Login</a>
+        @if(auth.isGuest)
+          <a href="/login" class="block text-gray-500 hover:text-brand-500">Log in</a>
+          <a href="/register" class="block text-gray-500 hover:text-brand-500">Register</a>
         @endif
       </div>
     </div>
   </nav>
 
-  <div class="container mx-auto px-6 my-6">
+  <div class="max-w-7xl mx-auto my-6 px-4 sm:px-6 lg:px-8">
     @!section('content')
   </div>
 </body>

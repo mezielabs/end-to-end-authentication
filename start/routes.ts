@@ -6,7 +6,9 @@ Route.get('/', async ({ view }) => {
 
 Route.get('/dashboard', async ({ view }) => {
   return view.render('dashboard')
-}).middleware('auth')
+})
+  .as('dashboard')
+  .middleware(['auth', 'confirmPassword'])
 
 Route.group(() => {
   Route.group(() => {
@@ -30,4 +32,7 @@ Route.group(() => {
   }).middleware('guest')
 
   Route.post('/logout', 'AuthController.destroy').middleware('auth')
+
+  Route.get('/confirm-password', 'ConfirmPasswordController.create').middleware('auth')
+  Route.post('/confirm-password', 'ConfirmPasswordController.store').middleware('auth')
 }).namespace('App/Controllers/Http/Auth')

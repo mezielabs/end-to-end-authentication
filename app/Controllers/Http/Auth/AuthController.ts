@@ -19,7 +19,7 @@ export default class AuthController {
         },
       })
 
-      return response.intended('/home')
+      return response.intended()
     } catch (error) {
       session.flash({
         alert: {
@@ -32,8 +32,10 @@ export default class AuthController {
     }
   }
 
-  public async destroy({ auth, response }: HttpContextContract) {
+  public async destroy({ auth, session, response }: HttpContextContract) {
     await auth.logout()
+
+    session.forget('password_confirmed_at')
 
     return response.redirect('/')
   }

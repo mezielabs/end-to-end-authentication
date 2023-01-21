@@ -5,3 +5,7 @@ coverage
 .DS_STORE
 .env
 tmp
+.yalc/@mezielabs/adonis-confirm-password/LICENSE.md
+.yalc/@mezielabs/adonis-confirm-password/package.json
+.yalc/@mezielabs/adonis-confirm-password/README.md
+.yalc/@mezielabs/adonis-confirm-password/yalc.sig

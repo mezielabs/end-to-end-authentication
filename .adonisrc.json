@@ -5,7 +5,8 @@
     "@adonisjs/core/build/commands",
     "@adonisjs/repl/build/commands",
     "@adonisjs/lucid/build/commands",
-    "@adonisjs/mail/build/commands"
+    "@adonisjs/mail/build/commands",
+    "@setten/bull-queue/build/commands"
   ],
   "exceptionHandlerNamespace": "App/Exceptions/Handler",
   "aliases": {
@@ -19,15 +20,11 @@
     "./start/kernel",
     {
       "file": "./start/viewGlobals",
-      "environment": [
-        "web"
-      ]
+      "environment": ["web"]
     },
     {
       "file": "./start/events",
-      "environment": [
-        "web"
-      ]
+      "environment": ["web"]
     }
   ],
   "providers": [
@@ -38,7 +35,9 @@
     "@adonisjs/shield",
     "@adonisjs/lucid",
     "@adonisjs/auth",
-    "@adonisjs/mail"
+    "@adonisjs/mail",
+    "@mezielabs/adonis-confirm-password",
+    "@setten/bull-queue"
   ],
   "metaFiles": [
     {
@@ -50,7 +49,5 @@
       "reloadServer": false
     }
   ],
-  "aceProviders": [
-    "@adonisjs/repl"
-  ]
+  "aceProviders": ["@adonisjs/repl"]
 }

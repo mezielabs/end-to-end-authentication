@@ -33,7 +33,10 @@
       "@adonisjs/shield",
       "@adonisjs/lucid",
       "@adonisjs/auth",
-      "@adonisjs/mail"
+      "@adonisjs/mail",
+      "@mezielabs/adonis-confirm-password",
+      "@adonisjs/redis",
+      "@setten/bull-queue"
     ]
   }
 }

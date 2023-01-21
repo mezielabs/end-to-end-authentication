@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "@mezielabs/adonis-confirm-password": {
+      "signature": "d3a7450d9dbfec93a21c91b9e25e840b",
+      "file": true
+    }
+  }
+}
